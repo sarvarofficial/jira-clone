@@ -1,7 +1,17 @@
 <script setup lang="ts">
 import {useAuthStore} from "~/store/auth.store";
-
-const authStore=useAuthStore()
+import {ACCOUNT} from "~/libs/appwrite";
+import {useLoadingStore} from "~/store/loading.store";
+const router=useRouter();
+const authStore = useAuthStore()
+const loadingStore=useLoadingStore()
+const logOut =async () =>  {
+loadingStore.set(true)
+ await ACCOUNT.deleteSession('current')
+  await router.push('/auth')
+  authStore.clearUserInfo()
+  loadingStore.set(false)
+}
 </script>
 
 <template>
@@ -12,20 +22,27 @@ const authStore=useAuthStore()
         <span class="text-2xl font-medium">Jira software</span>
       </NuxtLink>
       <div class="flex items-center justify-end">
-
-        <template v-if="authStore.currentUser.status">
-
-          {{authStore.currentUser.username}}
-        </template>
         <SharedThemeMode/>
-        <NuxtLink to="/auth" class="flex items-center space-x-2 ml-2">
-          <UButton color="secondary">
-            Get it free
+        <template v-if="authStore.currentUser.status">
+          <UButton color="error" class="ml-2" @click="logOut">
+            Log out
           </UButton>
-        </NuxtLink>
-        <NuxtLink to="/auth" class="flex items-center space-x-2 ml-2">
-          <UButton color="secondary" variant="soft">Sign in</UButton>
-        </NuxtLink>
+          <NuxtLink to="/documents" class="flex items-center space-x-2 ml-2">
+            <UButton color="secondary" variant="outline">
+              Documents
+            </UButton>
+          </NuxtLink>
+        </template>
+        <template v-else>
+          <NuxtLink to="/auth" class="flex items-center space-x-2 ml-2">
+            <UButton color="secondary">
+              Get it free
+            </UButton>
+          </NuxtLink>
+          <NuxtLink to="/auth" class="flex items-center space-x-2 ml-2">
+            <UButton color="secondary" variant="soft">Sign in</UButton>
+          </NuxtLink>
+        </template>
       </div>
     </div>
   </div>

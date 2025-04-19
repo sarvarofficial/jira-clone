@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import {tabs} from "@/constants";
 import {templates} from "@/constants";
+import {useAuthStore} from "~/store/auth.store";
 
 
 useHead({
   title: 'Jira Software',
 })
-
+const {currentUser} = useAuthStore()
 
 </script>
 
@@ -18,7 +19,16 @@ useHead({
       <div class="flex-col pl-20 space-y-3">
         <h1 class="text-5xl">Move fast, stay aligned, and build better - together</h1>
         <p>The #1 software development tool used by agile teams</p>
-        <UButton color="secondary"> Try it free</UButton>
+        <template v-if="currentUser.status">
+          <NuxtLink to="/documents">
+            <UButton color="secondary" variant="outline"> Documents</UButton>
+          </NuxtLink>
+        </template>
+        <template v-else>
+          <NuxtLink to="/auth" >
+            <UButton color="secondary"> Try it free</UButton>
+          </NuxtLink>
+        </template>
       </div>
 
       <NuxtImg src="./hero.webp"/>

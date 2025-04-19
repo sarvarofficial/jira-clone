@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from '@nuxt/ui'
-import {ACCOUNT, UNIQUE_ID} from "~/libs/appwrite";
+import {ACCOUNT} from "~/libs/appwrite";
 import {useAuthStore} from "~/store/auth.store";
 
 const state = reactive({
@@ -33,7 +33,7 @@ const isLoading=ref(false)
 async function login(payload:any) {
   try {
     isLoading.value = true;
-    // await ACCOUNT.createEmailPasswordSession(payload.email, payload.password)
+    await ACCOUNT.createEmailPasswordSession(payload.email, payload.password)
     const res= await ACCOUNT.get();
     authStore.setUserInfo({username: res.name, email: res.email, status: res.status})
     await router.push('/')

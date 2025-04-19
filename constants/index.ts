@@ -1,4 +1,9 @@
 import type {TabsItem} from "#ui/components/Tabs.vue";
+import {EnumStatus} from "~/types";
+
+export const DB_ID="jira-db";
+export const DEALS_COL_ID="67ff808100149a82fae5";
+export const COMMENTS_COL_ID="67ff82060000742a6e50";
 
 export const tabs: TabsItem[] = [
     {
@@ -75,4 +80,56 @@ export const templates = [
         name: 'DevOps',
         image: '/devops.svg',
     },
+]
+
+export const sidebarItems = [
+    {
+        name: 'Dashboard',
+        url: '/documents',
+        icon: 'radix-icons:dashboard',
+    },
+    {
+        name: 'Todo',
+        url: '/documents/to-do',
+        icon: 'ri:todo-fill',
+    },
+    {
+        name: 'In Progress',
+        url: '/documents/in-progress',
+        icon: 'game-icons:progression',
+    },
+    {
+        name: 'Produced',
+        url: '/documents/produced',
+        icon: 'eos-icons:product-subscriptions',
+    },
+    {
+        name: 'Done',
+        url: '/documents/done',
+        icon: 'ic:baseline-cloud-done',
+    },
+
+]
+
+export const statuses = [
+    {
+        status: EnumStatus.todo,
+        name: "To do",
+        items: []
+    },
+    {
+        status: EnumStatus.inProgress,
+        name: "In Progress",
+        items: []
+    },
+    {
+        status: EnumStatus.produced,
+        name: "Produced",
+        items: []
+    },
+    {
+        status: EnumStatus.done,
+        name: "Done",
+        items: []
+    }
 ]

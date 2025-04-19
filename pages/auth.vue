@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {ACCOUNT} from "~/libs/appwrite";
+
 definePageMeta({
   layout: 'auth',
   layoutTransition: {
@@ -14,6 +16,10 @@ useHead({
 const isLogin=ref(false)
 
 const toggleAuth = () => {isLogin.value =!isLogin.value}
+
+const onGithub=()=>{
+  ACCOUNT.createOAuth2Session('github', 'http://localhost:3000')
+}
 </script>
 
 <template>
@@ -32,7 +38,7 @@ const toggleAuth = () => {isLogin.value =!isLogin.value}
       </div>
       <USeparator label="OR" orientation="vertical" class="h-48"/>
       <div class="flex-1 space-y-4 flex flex-col justify-center ">
-        <UButton color="neutral" block size="lg">
+        <UButton color="neutral" block size="lg" @click="onGithub">
           <UIcon name="mdi:github" class="w-5 h-5"/>
           Login with GitHub
         </UButton>
